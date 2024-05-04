@@ -1,0 +1,23 @@
+{
+  "name": "aws-typescript-project-read-csv-ai",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "@types/aws-lambda": "^8.10.137",
+    "aws-lambda": "^1.0.7",
+    "express": "^4.18.2",
+    "serverless-plugin-typescript": "^2.1.5"
+  },
+  "scripts": {
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
+  },
+  "devDependencies": {
+    "eslint": "^9.2.0",
+    "pre-commit": "^1.2.2",
+    "typescript": "^5.4.5"
+  },
+  "pre-commit": [
+    "lint"
+  ]
+}

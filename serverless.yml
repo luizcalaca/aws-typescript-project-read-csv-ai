@@ -1,0 +1,58 @@
+org: luizcalaca
+app: aws-typescript-project-read-csv-ai
+service: aws-typescript-project-read-csv-ai
+frameworkVersion: "3"
+
+plugins:
+  - serverless-plugin-typescript
+
+custom:
+  tableName: "users-table-${sls:stage}"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:PutObject"
+        - "s3:GetObject"
+      Resource:
+        - "arn:aws:s3:::${file(config.json):S3_BUCKET_NAME}/*"
+
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [UsersTable, Arn]
+  environment:
+    USERS_TABLE: ${self:custom.tableName}
+
+functions:
+  api:
+    handler: src/index.handler
+    events:
+      - httpApi: "*"
+
+resources:
+  Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.tableName}
