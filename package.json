@@ -6,6 +6,8 @@
     "@types/aws-lambda": "^8.10.137",
     "aws-lambda": "^1.0.7",
     "express": "^4.18.2",
+    "langchain": "^0.1.36",
+    "papaparse": "^5.4.1",
     "serverless-plugin-typescript": "^2.1.5"
   },
   "scripts": {
@@ -13,6 +15,7 @@
     "lint:fix": "eslint . --ext .ts --fix"
   },
   "devDependencies": {
+    "@types/papaparse": "^5.3.14",
     "eslint": "^9.2.0",
     "pre-commit": "^1.2.2",
     "typescript": "^5.4.5"
