@@ -9,7 +9,7 @@ AWS.config.update({
   secretAccessKey: process.env.AWS_SECRET_ACESS_KEY_ID
 });
 
-export const handler = async (event: S3Event, context: any) => {
+export const handler = async (event: S3Event) => {
   const s3 = new AWS.S3();
   const dynamoDB = new AWS.DynamoDB.DocumentClient();
   const record = event.Records[0];
