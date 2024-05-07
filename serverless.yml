@@ -13,14 +13,6 @@ provider:
   name: aws
   runtime: nodejs18.x
 
-  iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-        - "s3:PutObject"
-        - "s3:GetObject"
-      Resource:
-        - "arn:aws:s3:::${file(config.json):S3_BUCKET_NAME}/*"
-
   iam:
     role:
       statements:
@@ -32,8 +24,11 @@ provider:
             - dynamodb:PutItem
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
+            - "s3:PutObject"
+            - "s3:GetObject"
           Resource:
             - Fn::GetAtt: [UsersTable, Arn]
+            - "arn:aws:s3:::${file(config.json):S3_BUCKET_NAME}/*"
   environment:
     USERS_TABLE: ${self:custom.tableName}
 
