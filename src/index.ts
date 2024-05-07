@@ -1,12 +1,17 @@
 import { S3Event } from 'aws-lambda';
-import { S3, DynamoDB } from 'aws-sdk';
+import AWS from 'aws-sdk';
 import { parse } from 'papaparse'; 
 import { CSVType } from './types/CSVType';
 import { randomUUID } from 'crypto';
 
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCES_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACESS_KEY_ID
+});
+
 export const handler = async (event: S3Event, context: any) => {
-  const s3 = new S3();
-  const dynamoDB = new DynamoDB.DocumentClient();
+  const s3 = new AWS.S3();
+  const dynamoDB = new AWS.DynamoDB.DocumentClient();
   const record = event.Records[0];
   const bucket = record.s3.bucket.name;
   const key = decodeURIComponent(record.s3.object.key.replace(/\+/g, ' '));
@@ -17,7 +22,7 @@ export const handler = async (event: S3Event, context: any) => {
     const parsedData = parse(csvData, { header: true }).data as unknown as CSVType[];
 
     for (const item of parsedData) {
-      const params: DynamoDB.DocumentClient.PutItemInput = {
+      const params: AWS.DynamoDB.DocumentClient.PutItemInput = {
         TableName: 'csv-messages-chat',
         Item: {
           id: randomUUID(),
