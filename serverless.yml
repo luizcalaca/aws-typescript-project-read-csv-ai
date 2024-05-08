@@ -14,4 +14,6 @@ functions:
   api:
     handler: src/index.handler
     events:
-      - httpApi: "*"
+      - s3:
+          bucket: "arn:aws:s3:::${file(config.json):S3_BUCKET_NAME}/*"
+          event: s3:ObjectCreated:*
