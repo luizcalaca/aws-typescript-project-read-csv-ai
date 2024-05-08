@@ -15,5 +15,5 @@ functions:
     handler: src/index.handler
     events:
       - s3:
-          bucket: aws-node-express-api-proj-serverlessdeploymentbuck-y0rzb4xzhqe2
+          bucket: aws-node-express-api-proj-serverlessdeploymentbuck-y0rzb4xzhqe23
           event: s3:ObjectCreated:*
