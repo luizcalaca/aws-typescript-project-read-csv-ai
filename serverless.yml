@@ -15,5 +15,5 @@ functions:
     handler: src/index.handler
     events:
       - s3:
-          bucket: "arn:aws:s3:::${file(config.json):S3_BUCKET_NAME}/*"
+          bucket: aws-node-express-api-proj-serverlessdeploymentbuck-y0rzb4xzhqe2
           event: s3:ObjectCreated:*
